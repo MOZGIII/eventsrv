@@ -1,0 +1,17 @@
+{
+  "name": "eventsrv",
+  "version": "0.1.0",
+  "description": "",
+  "main": "src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "MOZGIII",
+  "dependencies": {
+    "typescript": "^1.7.5"
+  },
+  "devDependencies": {
+    "typings": "^0.6.8"
+  },
+  "private": true
+}

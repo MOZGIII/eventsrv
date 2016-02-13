@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es3",
+        "noImplicitAny": false,
+        "outDir": "built",
+        "rootDir": "src",
+        "sourceMap": false
+    },
+    "files": [
+      "typings/main.d.ts",
+      "src/main.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}
