@@ -1,0 +1,11 @@
+#!/usr/bin/env node
+var process = require('process');
+var child_process = require('child_process');
+process.chdir(__dirname + '/..');
+
+function run(commandline) {
+    console.log('> ' + commandline);
+    child_process.execSync(commandline, { stdio: 'inherit' });
+}
+
+run('node_modules/.bin/tsc');
