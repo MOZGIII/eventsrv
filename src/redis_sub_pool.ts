@@ -17,7 +17,6 @@ export class RedisSubPool extends EventEmitter {
 
   addExisingClient(redisClient: redis.RedisClient) {
     this.throwIfLocked();
-    if (redisClient.config)
     this.pool.push(redisClient);
   }
 
