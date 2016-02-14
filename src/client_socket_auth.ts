@@ -94,6 +94,12 @@ export function makeAuthHandler(timeout = 5000, successfulAuthHandler: (socket: 
         return;
       }
 
+      if (!newAuth.isValid()) {
+        console.log('Client ' + socket.id + ' disconnected due to invalid authentication');
+        authFailureAction();
+        return;
+      }
+
       // Assign new auth on success
       socket.auth = newAuth;
 
