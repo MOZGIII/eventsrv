@@ -13,7 +13,7 @@ var socketIOServer: SocketIO.Server;
 var redisSubPool: rsp.RedisSubPool;
 
 export function createHttpServer(): http.Server {
-  return http.createServer(function (req: http.ServerRequest, res: http.ServerResponse): void {
+  return http.createServer(function(req: http.ServerRequest, res: http.ServerResponse): void {
     res.write(template.clientTemplate(socketIOChannel, template.authMessageTemplate));
     res.end();
   });
