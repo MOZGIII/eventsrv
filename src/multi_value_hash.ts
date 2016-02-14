@@ -38,7 +38,7 @@ export class MutiValueHash<KeyType, ValueType> {
 
   exist(key: KeyType): boolean {
     var values = this.dictionary[<any>key];
-    return typeof values === 'undefined';
+    return typeof values !== 'undefined';
   }
 
   valueExist(key: KeyType, value: ValueType): boolean {
