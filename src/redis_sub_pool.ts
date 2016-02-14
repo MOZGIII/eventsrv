@@ -25,10 +25,11 @@ export class RedisSubPool extends EventEmitter {
     this.pool.push(redisClient);
   }
 
-  addClient(redisClientParams: redis.ClientOpts|string) {
+  addClient(redisClientParams: redis.ClientOpts | string): redis.RedisClient {
     this.throwIfLocked();
     var newClient = redis.createClient(redisClientParams);
     this.addExisingClient(newClient);
+    return newClient;
   }
 
   lock() {
