@@ -47,7 +47,7 @@ export class RedisSubPool {
     });
   }
 
-  addListener(channel: string, onMessage: MessageCallback) {
+  addChannelListener(channel: string, onMessage: MessageCallback) {
     if (!this.messageHandlers.exist(channel)) {
       this.subscribe(channel);
     }
@@ -55,7 +55,7 @@ export class RedisSubPool {
     this.messageHandlers.add(channel, onMessage);
   }
 
-  removeListener(channel: string, onMessage: MessageCallback) {
+  removeChannelListener(channel: string, onMessage: MessageCallback) {
     this.messageHandlers.remove(channel, onMessage);
 
     if (!this.messageHandlers.exist(channel)) {

@@ -50,10 +50,10 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
     socket.emit(socketIOChannel, message);
   };
 
-  redisSubPool.addListener(redisChannel, redisListener);
+  redisSubPool.addChannelListener(redisChannel, redisListener);
 
   socket.on('disconnect', () => {
-    redisSubPool.removeListener(redisChannel, redisListener);
+    redisSubPool.removeChannelListener(redisChannel, redisListener);
   });
 }
 
