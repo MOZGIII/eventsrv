@@ -19,12 +19,9 @@ export class MutiValueHash<KeyType, ValueType> {
     if (typeof values === 'undefined') {
       return;
     }
-    var i = values.length;
-    while (i) {
+    for (var i = values.length; i--; ) {
       if (values[i] === value) {
         values.splice(i, 1);
-      } else {
-        i--;
       }
     }
     if (values.length === 0) {
