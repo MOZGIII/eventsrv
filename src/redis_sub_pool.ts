@@ -8,6 +8,11 @@ export interface MessageCallback {
   (message: string, channel?: string, redisClient?: redis.RedisClient): void;
 }
 
+// Extended redis client interface that provides ready boolean
+interface RedisClientEx extends redis.RedisClient {
+  ready: boolean;
+}
+
 export class RedisSubPool extends EventEmitter {
   // Pool is locked after start.
   pool: Array<redis.RedisClient> = [];
@@ -39,6 +44,8 @@ export class RedisSubPool extends EventEmitter {
         }, this);
       });
     });
+
+    this.addReadyListeners();
   }
 
   ping() {
@@ -70,6 +77,24 @@ export class RedisSubPool extends EventEmitter {
   }
 
   // private
+
+  private addReadyListeners() {
+    this.throwIfNotLocked();
+
+    var allReadyTrigger_this = this;
+    var allReadyTrigger = () => {
+      var allReady = allReadyTrigger_this.pool.every((client: RedisClientEx): boolean => {
+        return client.ready;
+      }, allReadyTrigger_this);
+      if (allReady) {
+        allReadyTrigger_this.emit('allReady');
+      }
+    };
+
+    this.forEachClient((client: redis.RedisClient) => {
+      client.addListener('ready', allReadyTrigger);
+    });
+  }
 
   private subscribe(channel: string) {
     this.throwIfNotLocked();
