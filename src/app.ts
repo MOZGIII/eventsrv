@@ -68,8 +68,14 @@ export function start() {
 
   // Add auth mechanism
   socketAuth.authenticateServer(socketIOServer, connectionHandler);
-  // Start listening
-  httpServer.listen(3380);
 
-  console.log('Initialization complete');
+  // Make sure connections to all redis`es is established
+  redisSubPool.once('allReady', () => { allReady(); });
+
+  var allReady = () => {
+    // Start listening
+    httpServer.listen(3380);
+
+    console.log('Initialization complete');
+  };
 }
