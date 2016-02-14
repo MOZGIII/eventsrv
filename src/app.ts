@@ -46,8 +46,8 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
     console.log(data);
   });
 
-  var redisChannel = buildRedisChannelName(socket.auth.userId);
-  var redisListener = (message: string) => {
+  var redisChannel: string = buildRedisChannelName(socket.auth.userId);
+  var redisListener: rsp.MessageCallback = (message: string) => {
     socket.emit(socketIOChannel, message);
   };
 
