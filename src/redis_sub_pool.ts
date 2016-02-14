@@ -1,5 +1,6 @@
 'use strict';
 import * as redis from 'redis';
+import { EventEmitter } from 'events';
 import { MutiValueHash } from './multi_value_hash';
 
 // Public interface
@@ -7,7 +8,7 @@ export interface MessageCallback {
   (message: string, channel?: string, redisClient?: redis.RedisClient): void;
 }
 
-export class RedisSubPool {
+export class RedisSubPool extends EventEmitter {
   // Pool is locked after start.
   pool: Array<redis.RedisClient> = [];
   locked: boolean = false;
