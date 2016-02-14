@@ -61,11 +61,14 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
 export function start() {
   console.log("Initializing...");
 
+  // Create everything
   httpServer = createHttpServer();
   socketIOServer = createSocketIOServer(httpServer);
   redisSubPool = createRedisSubPool();
 
+  // Add auth mechanism
   socketAuth.authenticateServer(socketIOServer, connectionHandler);
+  // Start listening
   httpServer.listen(3380);
 
   console.log("Initialization complete");
