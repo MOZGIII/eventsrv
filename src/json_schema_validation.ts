@@ -1,3 +1,4 @@
+'use strict';
 import * as fs from 'fs';
 import * as utils from './utils';
 import * as ajv from 'ajv';

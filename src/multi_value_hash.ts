@@ -1,3 +1,4 @@
+'use strict';
 type StringualDictionary<T> = { [key: string]: T }
 type NumericDictionary<T> = { [key: number]: T }
 

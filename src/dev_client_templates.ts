@@ -1,3 +1,4 @@
+'use strict';
 import * as socketAuth from './client_socket_auth';
 
 export const authMessageTemplate = JSON.stringify({ user_id: '123' });

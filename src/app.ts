@@ -1,3 +1,4 @@
+'use strict';
 import * as socketio from 'socket.io';
 import * as http from 'http';
 import * as socketAuth from './client_socket_auth';

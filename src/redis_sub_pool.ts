@@ -1,3 +1,4 @@
+'use strict';
 import * as redis from 'redis';
 import { MutiValueHash } from './multi_value_hash';
 

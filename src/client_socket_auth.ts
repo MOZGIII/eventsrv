@@ -1,3 +1,4 @@
+'use strict';
 import * as crypto from 'crypto';
 import * as jsv from './json_schema_validation';
 import * as json from './typings/json';
