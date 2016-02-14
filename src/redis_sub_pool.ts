@@ -39,6 +39,7 @@ export class RedisSubPool extends EventEmitter {
 
     this.forEachClient((client: redis.RedisClient) => {
       client.on('message', (channel: string, message: string) => {
+        console.log('Got message ' + message + ' from channel ' + channel);
         this.messageHandlers.get(channel).forEach((cb: MessageCallback) => {
           cb(message, channel, client);
         }, this);
@@ -102,6 +103,7 @@ export class RedisSubPool extends EventEmitter {
       if (!client.subscribe(channel)) {
         throw new Error('Redis client cound not subscribe for some reason');
       }
+      console.log('Subscribed to channel ' + channel + '!');
     });
   }
 
@@ -115,6 +117,7 @@ export class RedisSubPool extends EventEmitter {
           throw new Error('Redis client cound not unsubscribe for some reason (it was connected though)');
         }
       }
+      console.log('Unsubscribed from channel ' + channel + '!');
     });
   }
 

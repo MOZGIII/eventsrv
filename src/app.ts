@@ -22,7 +22,9 @@ export function createHttpServer(): http.Server {
 export function createRedisSubPool(): rsp.RedisSubPool {
   var newRedisSubPool = new rsp.RedisSubPool();
 
-  var client = newRedisSubPool.addClient('redis://192.168.33.10/3');
+  var clientURL = 'redis://192.168.33.10/3';
+  console.log('Connecting to redis server at ' + clientURL);
+  var client = newRedisSubPool.addClient(clientURL);
 
   newRedisSubPool.lock();
   return newRedisSubPool;
@@ -48,12 +50,15 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
 
   var redisChannel: string = buildRedisChannelName(socket.auth.userId);
   var redisListener: rsp.MessageCallback = (message: string) => {
+    console.log('Sending data for client ' + socket.id + ' from channel ' + redisChannel, message);
     socket.emit(socketIOChannel, message);
   };
 
+  console.log('Adding redis channel listener for client ' + socket.id + ' at channel ' + redisChannel);
   redisSubPool.addChannelListener(redisChannel, redisListener);
 
   socket.on('disconnect', () => {
+    console.log('Removing redis channel listener for client ' + socket.id + ' at channel ' + redisChannel);
     redisSubPool.removeChannelListener(redisChannel, redisListener);
   });
 }
