@@ -13,6 +13,8 @@
     "typescript": "^1.7.5"
   },
   "devDependencies": {
+    "typhen": "^0.7.4",
+    "typhen-json-schema": "^0.3.1",
     "typings": "^0.6.8"
   },
   "private": true

@@ -13,5 +13,15 @@
   ],
   "exclude": [
     "node_modules"
+  ],
+  "typhen": [
+    {
+      "plugin": "typhen-json-schema",
+      "pluginOptions": {
+        "enumType": "string"
+      },
+      "outDir": "built/generated/schemas",
+      "files": [ "src/typings/json.d.ts" ]
+    }
   ]
 }

@@ -3,3 +3,4 @@ var bi = require(__dirname + '/../utils/bin-init')
 var run = bi.run;
 
 run('node_modules/.bin/tsc');
+run('node_modules/.bin/typhen')
