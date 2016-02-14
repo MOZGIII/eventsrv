@@ -1,11 +1,15 @@
-import * as redis from 'redis';
 import * as socketio from 'socket.io';
 import * as http from 'http';
 import * as socketAuth from './client_socket_auth';
 import * as template from './dev_client_templates';
+import * as rsp from './redis_sub_pool';
 
 export const socketIOChannel = 'app-event';
-export const redisPreifx = socketIOChannel;
+export const redisPrefix = socketIOChannel;
+
+var httpServer: http.Server;
+var socketIOServer: SocketIO.Server;
+var redisSubPool: rsp.RedisSubPool;
 
 export function createHttpServer(): http.Server {
   return http.createServer(function (req: http.ServerRequest, res: http.ServerResponse): void {
@@ -14,13 +18,21 @@ export function createHttpServer(): http.Server {
   });
 }
 
-export function createRedisClients(opts?: redis.ClientOpts): redis.RedisClient[] {
-  var client = redis.createClient('redis://192.168.33.10/3');
-  return [client];
+export function createRedisSubPool(): rsp.RedisSubPool {
+  var newRedisSubPool = new rsp.RedisSubPool();
+
+  var client = newRedisSubPool.addClient('redis://192.168.33.10/3');
+
+  newRedisSubPool.lock();
+  return newRedisSubPool;
 }
 
 export function createSocketIOServer(httpServer: http.Server): SocketIO.Server {
   return socketio(httpServer);
+}
+
+function buildRedisChannelName(suffix: string): string {
+  return redisPrefix ? (redisPrefix + '.' + suffix) : suffix;
 }
 
 export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
@@ -32,18 +44,25 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
   socket.on('my other event', function(data) {
     console.log(data);
   });
-}
 
-var httpServer: http.Server;
-var socketIOServer: SocketIO.Server;
-var subscribers: redis.RedisClient[];
+  var redisChannel = buildRedisChannelName(socket.auth.userId);
+  var redisListener = (message: string) => {
+    socket.emit(socketIOChannel, message);
+  };
+
+  redisSubPool.addListener(redisChannel, redisListener);
+
+  socket.on('disconnect', () => {
+    redisSubPool.removeListener(redisChannel, redisListener);
+  });
+}
 
 export function start() {
   console.log("Initializing...");
 
   httpServer = createHttpServer();
   socketIOServer = createSocketIOServer(httpServer);
-  // subscribers = createRedisClients();
+  redisSubPool = createRedisSubPool();
 
   socketAuth.authenticateServer(socketIOServer, connectionHandler);
   httpServer.listen(3380);
