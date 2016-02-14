@@ -1,5 +1,7 @@
 import * as fs from 'fs';
 import * as utils from './utils';
+import * as ajv from 'ajv';
+const ajvInstance: ajv.AjvInstance = ajv();
 
 export const schemasPath = utils.generatedPath + '/schemas';
 
@@ -12,9 +14,9 @@ export function loadValidator(path: string): JSONSchemaValidator {
 }
 
 export class JSONSchemaValidationError extends Error {
-  validationErrors: string[]
+  validationErrors: ValidationError[]
 
-  constructor(validationErrors: string[]) {
+  constructor(validationErrors: ValidationError[]) {
     const message = 'JSON did not validate correctly against the schema.';
     super(message)
     this.name = 'JSONSchemaValidationError';
@@ -24,18 +26,26 @@ export class JSONSchemaValidationError extends Error {
   }
 }
 
+export interface ValidationError extends ajv.ErrorObject {}
+
 export class JSONSchemaValidator {
   static fromSchemaString(schemaString: string): JSONSchemaValidator {
     var schemaObject = JSON.parse(schemaString);
     return new JSONSchemaValidator(schemaObject);
   }
 
-  constructor(jsonSchemaObject: any) {
-    // implement validator
+  ajvValidationFunction: ajv.ValidationFunction = null;
+
+  constructor(jsonSchemaObject: Object) {
+    this.ajvValidationFunction = ajvInstance.compile(jsonSchemaObject);
   }
 
-  validate(jsonObject: any): string[] {
-    return [];
+  validate(jsonObject: any): ValidationError[] {
+    if (this.ajvValidationFunction(jsonObject)) {
+      return [];
+    }
+
+    return this.ajvValidationFunction.errors;
   }
 
   throwingValidate(jsonObject: any): boolean {
