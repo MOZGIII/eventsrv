@@ -86,7 +86,7 @@ export function makeAuthHandler(timeout = 5000, successfulAuthHandler: (socket: 
         var newAuth = Auth.fromEncryptedToken(token);
       } catch (ex) {
         console.log('Client ' + socket.id + ' disconnected due to exception in authentication code:', ex.message);
-        if (typeof ex.stack != 'undefined') {
+        if (typeof ex.stack !== 'undefined') {
           console.log(ex.stack);
         } else {
           console.log(ex);

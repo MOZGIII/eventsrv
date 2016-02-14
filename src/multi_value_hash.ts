@@ -27,7 +27,7 @@ export class MutiValueHash<KeyType, ValueType> {
         i--;
       }
     }
-    if (values.length == 0) {
+    if (values.length === 0) {
       this.flush(key);
     }
   }

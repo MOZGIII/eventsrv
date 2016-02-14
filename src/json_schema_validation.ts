@@ -51,7 +51,7 @@ export class JSONSchemaValidator {
 
   throwingValidate(jsonObject: any): boolean {
     var errors = this.validate(jsonObject);
-    if (errors.length != 0) {
+    if (errors.length !== 0) {
       throw new JSONSchemaValidationError(errors);
 
       // Should never be called
