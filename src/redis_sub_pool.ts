@@ -69,7 +69,7 @@ export class RedisSubPool {
     this.throwIfNotLocked();
     this.forEachClient((client: redis.RedisClient) => {
       if (!client.subscribe(channel)) {
-        throw new Error('Client ' + client + ' cound not subscribe for some reason');
+        throw new Error('Redis client cound not subscribe for some reason');
       }
     });
   }
@@ -78,7 +78,11 @@ export class RedisSubPool {
     this.throwIfNotLocked();
     this.forEachClient((client: redis.RedisClient) => {
       if (!client.unsubscribe(channel)) {
-        throw new Error('Client ' + client + ' cound not unsubscribe for some reason');
+        if (!client.connected) {
+          throw new Error('Redis client cound not unsubscribe while disconnected');
+        } else {
+          throw new Error('Redis client cound not unsubscribe for some reason (it was connected though)');
+        }
       }
     });
   }
