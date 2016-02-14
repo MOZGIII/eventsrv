@@ -2,4 +2,4 @@
 cd "$( dirname "${BASH_SOURCE[0]}" )/.."
 [[ -f .env ]] && source .env
 [[ -f .env.local ]] && source .env.local
-exec node built/main.js $@
+exec node $NODE_OPTIONS built/main.js $@
