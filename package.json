@@ -14,6 +14,7 @@
     "typescript": "^1.7.5"
   },
   "devDependencies": {
+    "tslint": "^3.3.0",
     "typhen": "^0.7.4",
     "typhen-json-schema": "^0.3.1",
     "typings": "^0.6.8"
