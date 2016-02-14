@@ -59,7 +59,7 @@ export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
 }
 
 export function start() {
-  console.log("Initializing...");
+  console.log('Initializing...');
 
   // Create everything
   httpServer = createHttpServer();
@@ -71,5 +71,5 @@ export function start() {
   // Start listening
   httpServer.listen(3380);
 
-  console.log("Initialization complete");
+  console.log('Initialization complete');
 }
