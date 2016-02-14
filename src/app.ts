@@ -52,13 +52,6 @@ function buildRedisChannelName(suffix: string): string {
 
 export function connectionHandler(socket: socketAuth.AuthenticatableSocket) {
   console.log('Senging hello to ' + socket.id + ' with user ' + socket.auth.userId);
-  socket.emit('news', {
-    msg: 'hello',
-    socket_id: socket.id
-  });
-  socket.on('my other event', function(data) {
-    console.log(data);
-  });
 
   var redisChannel: string = buildRedisChannelName(socket.auth.userId);
   var redisListener: rsp.MessageCallback = (message: string) => {

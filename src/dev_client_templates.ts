@@ -10,10 +10,6 @@ export function clientTemplate(socketIOChannel: string, authMessage: string) {
   var handler = function (data) {
     console.log('Got data:');
     console.log(data);
-    console.log('Seding data:');
-    var response = { my: 'data-sent-from-client', socket_id: socket.id };
-    console.log(response);
-    socket.emit('my other event', response);
   }
 
   socket.on('connect', function() {
