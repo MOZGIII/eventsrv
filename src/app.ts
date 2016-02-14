@@ -29,13 +29,13 @@ export function createRedisSubPool(): rsp.RedisSubPool {
     console.log('Redis connection to ' + clientURL + ' is ready');
   });
   client.on('subscribe', (channel, count) => {
-    console.log('Redis subscribed to channel ' + channel +  ' (' + count + ' other clients) at ' + clientURL);
+    console.log('Redis subscribed to channel ' + channel +  ' (' + count + ' total clients) at ' + clientURL);
   });
   client.on('unsubscribe', (channel, count) => {
-    console.log('Redis unsubscribed from channel ' + channel + ' (' + count + ' other clients) at ' + clientURL);
+    console.log('Redis unsubscribed from channel ' + channel + ' (' + count + ' total clients) at ' + clientURL);
   });
   client.on('message', (channel, message) => {
-    console.log('Redis got message ' + message + ' from channel ' + channel + ' at ' + clientURL);
+    console.log('Redis got message "' + message + '" from channel ' + channel + ' at ' + clientURL);
   });
 
   newRedisSubPool.lock();
