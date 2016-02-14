@@ -25,6 +25,9 @@ export function createRedisSubPool(): rsp.RedisSubPool {
   var clientURL = 'redis://192.168.33.10/3';
   console.log('Connecting to redis server at ' + clientURL);
   var client = newRedisSubPool.addClient(clientURL);
+  client.on('ready', () => {
+    console.log('Redis connection to ' + clientURL + ' is ready');
+  });
 
   newRedisSubPool.lock();
   return newRedisSubPool;
