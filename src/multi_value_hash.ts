@@ -7,7 +7,7 @@ export class MutiValueHash<KeyType, ValueType> {
 
   add(key: KeyType, value: ValueType) {
     var values = this.dictionary[<any>key];
-    if (typeof values === "undefined") {
+    if (typeof values === 'undefined') {
       values = [];
       this.dictionary[<any>key] = values;
     }
@@ -16,7 +16,7 @@ export class MutiValueHash<KeyType, ValueType> {
 
   remove(key: KeyType, value: ValueType) {
     var values = this.dictionary[<any>key];
-    if (typeof values === "undefined") {
+    if (typeof values === 'undefined') {
       return;
     }
     var i = values.length;
@@ -38,12 +38,12 @@ export class MutiValueHash<KeyType, ValueType> {
 
   exist(key: KeyType): boolean {
     var values = this.dictionary[<any>key];
-    return typeof values === "undefined";
+    return typeof values === 'undefined';
   }
 
   valueExist(key: KeyType, value: ValueType): boolean {
     var values = this.dictionary[<any>key];
-    if (typeof values === "undefined") {
+    if (typeof values === 'undefined') {
       return false;
     }
 
@@ -56,6 +56,6 @@ export class MutiValueHash<KeyType, ValueType> {
 
   get(key: KeyType): Array<ValueType> {
     var values = this.dictionary[<any>key];
-    return (typeof values === "undefined") ? [] : values;
+    return (typeof values === 'undefined') ? [] : values;
   }
 }
