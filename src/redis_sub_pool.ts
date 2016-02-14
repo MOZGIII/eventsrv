@@ -42,6 +42,12 @@ export class RedisSubPool extends EventEmitter {
     });
   }
 
+  ping() {
+    this.forEachClient((client: redis.RedisClient) => {
+      client.ping();
+    });
+  }
+
   quit() {
     this.throwIfLocked();
     this.forEachClient((client: redis.RedisClient) => {
