@@ -13,15 +13,15 @@ if (!password) {
 const authMessageSchema = jsv.loadValidator('json/auth_message.json');
 
 export function decrypt(text: string) {
-  var decipher = crypto.createDecipher(algorithm, password)
-  var dec = decipher.update(text, 'hex', 'utf8')
+  var decipher = crypto.createDecipher(algorithm, password);
+  var dec = decipher.update(text, 'hex', 'utf8');
   dec += decipher.final('utf8');
   return dec;
 }
 
 export function encrypt(text: string) {
-  var cipher = crypto.createCipher(algorithm, password)
-  var crypted = cipher.update(text, 'utf8', 'hex')
+  var cipher = crypto.createCipher(algorithm, password);
+  var crypted = cipher.update(text, 'utf8', 'hex');
   crypted += cipher.final('hex');
   return crypted;
 }
@@ -53,7 +53,7 @@ export class Auth {
 }
 
 export interface AuthenticatableSocket extends SocketIO.Socket {
-  auth: Auth
+  auth: Auth;
 }
 
 export function authenticateServer(server: SocketIO.Server, successfulAuthHandler: (socket: SocketIO.Socket) => void): void {
@@ -66,11 +66,11 @@ export function makeAuthHandler(timeout = 5000, successfulAuthHandler: (socket: 
 
     var authFailureAction = () => {
       socket.disconnect();
-    }
+    };
 
     var authSuccessAction = () => {
       successfulAuthHandler(socket);
-    }
+    };
 
     socket.once('authentication', (token: string) => {
       if (authTimer == null) {
@@ -107,7 +107,7 @@ export function makeAuthHandler(timeout = 5000, successfulAuthHandler: (socket: 
       socket.once('disconnect', () => {
         // Reset authentication cause we are not connected anymore
         socket.auth = null;
-      })
+      });
 
       console.log('Client ' + socket.id + ' authenticated successfully');
       console.log(socket.auth);
@@ -125,5 +125,5 @@ export function makeAuthHandler(timeout = 5000, successfulAuthHandler: (socket: 
     }, timeout);
 
     console.log('Client ' + socket.id + ' connected, waiting for authentication');
-  }
+  };
 }

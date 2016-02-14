@@ -15,11 +15,11 @@ export function loadValidator(path: string): JSONSchemaValidator {
 }
 
 export class JSONSchemaValidationError extends Error {
-  validationErrors: ValidationError[]
+  validationErrors: ValidationError[];
 
   constructor(validationErrors: ValidationError[]) {
     const message = 'JSON did not validate correctly against the schema.';
-    super(message)
+    super(message);
     this.name = 'JSONSchemaValidationError';
     this.message = message;
     this.stack = (<any>new Error()).stack;

@@ -1,3 +1,3 @@
 export interface AuthMessage {
-  user_id: string
+  user_id: string;
 }

@@ -4,7 +4,7 @@ import { MutiValueHash } from './multi_value_hash';
 
 // Public interface
 export interface MessageCallback {
-  (message: string, channel?: string, redisClient?: redis.RedisClient): void
+  (message: string, channel?: string, redisClient?: redis.RedisClient): void;
 }
 
 export class RedisSubPool {
