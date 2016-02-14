@@ -64,9 +64,9 @@ export class RedisSubPool {
     }
   }
 
-  private
+  // private
 
-  subscribe(channel: string) {
+  private subscribe(channel: string) {
     this.throwIfNotLocked();
     this.forEachClient((client: redis.RedisClient) => {
       if (!client.subscribe(channel)) {
@@ -75,7 +75,7 @@ export class RedisSubPool {
     });
   }
 
-  unsubscribe(channel: string) {
+  private unsubscribe(channel: string) {
     this.throwIfNotLocked();
     this.forEachClient((client: redis.RedisClient) => {
       if (!client.unsubscribe(channel)) {
@@ -88,20 +88,19 @@ export class RedisSubPool {
     });
   }
 
-
-  forEachClient(callback: (client: redis.RedisClient) => void) {
+  private forEachClient(callback: (client: redis.RedisClient) => void) {
     for (var i = this.pool.length - 1; i >= 0; i--) {
       callback(this.pool[i]);
     }
   }
 
-  throwIfLocked() {
+  private throwIfLocked() {
     if (this.locked) {
       throw new Error('Pool was already locked when warmup action happened');
     }
   }
 
-  throwIfNotLocked() {
+  private throwIfNotLocked() {
     if (!this.locked) {
       throw new Error('Pool was not locked yet when workflow action happened');
     }
