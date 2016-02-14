@@ -1,4 +1,3 @@
 'use strict';
-import * as app from './app';
-
-app.start();
+import { start } from './app';
+start();
